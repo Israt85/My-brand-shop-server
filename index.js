@@ -42,7 +42,7 @@ async function run() {
     app.get('/products/:brandName', async (req, res) => {
       const brandName = req.params.brandName;
       const query = { brand: brandName };
-      const products = await productCollection.find(query).toArray();
+      const products = await userCollection.find(query).toArray();
       res.send(products);
   });
   
@@ -56,6 +56,17 @@ async function run() {
         res.send(result)
     } )
 
+    app.put('/products/:id', async(req,res)=>{
+      const id = req.params.id
+      const updateUser = req.body
+      console.log(updateUser);
+      const filter = {_id : new ObjectId(id)}
+      const update = {
+          $set:{updateUser}
+      }
+      const result = await userCollection.updateOne(filter,update)
+      res.send(result)
+  })
 
 
 
